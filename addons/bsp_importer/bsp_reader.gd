@@ -301,6 +301,9 @@ var generate_texture_materials := false
 var mesh_separation_grid_size := 256.0
 var bspx_model_to_brush_map := {}
 
+# Note custom use case specific behavior - to be removed later
+var custom_foliage_configs : Array[Resource]
+var custom_import_script_behavior : bool = false
 
 var inverse_scale_fac : float = 32.0:
 	set(v):
@@ -906,7 +909,25 @@ func read_bsp(source_file : String) -> Node:
 			post_import_node.set_script(script)
 			if (post_import_node.has_method("post_import")):
 				if (post_import_node.get_script().is_tool()):
-					post_import_node.post_import(root_node)
+					if custom_import_script_behavior:
+						var post_import_ns = post_import_node.post_import(root_node, foliage_configs)
+						print(post_import_ns);
+						for n in post_import_ns:
+							root_node.add_child(n, true)
+							n.owner = root_node
+						var surfaces_nodes = post_import_node.generate_surface_nodes(root_node)
+						print(surfaces_nodes);
+						for n in surfaces_nodes:
+							var sb = StaticBody3D.new()
+							sb.set_collision_mask_value(1, false)
+							sb.set_collision_layer_value(1, false)
+							sb.set_collision_layer_value(30, true)
+							sb.add_child(n)
+							root_node.add_child(sb, true)
+							n.owner = root_node
+							sb.owner = root_node
+					else:
+						post_import_node.post_import(root_node)
 				else:
 					printerr("Post import script must have @tool set.")
 			else:

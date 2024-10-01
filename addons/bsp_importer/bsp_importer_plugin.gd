@@ -125,6 +125,14 @@ func _get_import_options(_path : String, preset_index : int):
 			{
 				"name" : "post_import_script",
 				"default_value" : ""
+			},
+			{
+				"name" : "custom_foliage_configs",
+				"default_value" : [] as Array[Object]
+			},
+			{
+				"name" : "custom_import_script_behavior",
+				"default_value" : false
 			}]
 		_:
 			return []
@@ -155,6 +163,10 @@ func _import(source_file : String, save_path : String, options, r_platform_varia
 	bsp_reader.generate_texture_materials = options["generate_texture_materials"]
 	bsp_reader.culling_textures_exclude = options.culling_textures_exclude
 	bsp_reader.post_import_script_path = options["post_import_script"]
+
+	# Note custom use case specific behavior - to be removed later
+	bsp_reader.custom_foliage_configs = options["custom_foliage_configs"]
+	bsp_reader.custom_import_script_behavior = options["custom_import_script_behavior"]
 
 	var bsp_scene := bsp_reader.read_bsp(source_file)
 	if (!bsp_scene):
