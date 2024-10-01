@@ -910,7 +910,7 @@ func read_bsp(source_file : String) -> Node:
 			if (post_import_node.has_method("post_import")):
 				if (post_import_node.get_script().is_tool()):
 					if custom_import_script_behavior:
-						var post_import_ns = post_import_node.post_import(root_node, foliage_configs)
+						var post_import_ns = post_import_node.post_import(root_node, custom_foliage_configs)
 						print(post_import_ns);
 						for n in post_import_ns:
 							root_node.add_child(n, true)

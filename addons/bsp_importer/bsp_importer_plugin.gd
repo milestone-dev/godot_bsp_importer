@@ -87,7 +87,7 @@ func _get_import_options(_path : String, preset_index : int):
 			},
 			{
 				"name" : "use_entity_remap",
-				"default_value" : false
+				"default_value" : true
 			},
 			## Can we have tooltips here?
 			{
@@ -116,7 +116,7 @@ func _get_import_options(_path : String, preset_index : int):
 			},
 			{
 				"name" : "generate_texture_materials",
-				"default_value" : true
+				"default_value" : false
 			},
 			{
 				"name" : "mesh_separation_grid_size",
