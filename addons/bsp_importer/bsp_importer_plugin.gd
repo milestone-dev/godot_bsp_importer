@@ -165,7 +165,8 @@ func _import(source_file : String, save_path : String, options, r_platform_varia
 	bsp_reader.post_import_script_path = options["post_import_script"]
 
 	# Note custom use case specific behavior - to be removed later
-	bsp_reader.custom_foliage_configs = options["custom_foliage_configs"]
+	if options["custom_foliage_configs"].size() > 0:
+		bsp_reader.custom_foliage_configs = options["custom_foliage_configs"]
 	bsp_reader.custom_import_script_behavior = options["custom_import_script_behavior"]
 
 	var bsp_scene := bsp_reader.read_bsp(source_file)
